@@ -24,5 +24,17 @@
       },
       { "name": "buffer", "label": "Buffer cat", "type": "number", "required": true }
     ] 
+  },
+  "users" : { 
+    "title": "Users",
+    "api_endpoint" : "https://prod-api.manupal.dev/api/users",
+    "fields": [
+      { "name": "username", "label": "Username", "type": "text", "required": true },      
+      { "name": "title", "label": "Title", "type": "text", "required": true },
+      { "name": "password", "label": "Password", "type": "text", "required": true },
+      { "name": "status", "label": "Status", "type": "text", "required": true },
+      { "name": "permissions", "label": "Permissions", "type": "textarea" },
+      { "name": "org_id", "label": "ORG Id", "type": "hidden", "required": true, "value" : "ef1aa2bc-da00-40a0-83fd-dae68b29de5b" }
+    ] 
   }
 }
