@@ -1,0 +1,40 @@
+<template>
+    <nav class="bg-blue-600 p-4 text-white">
+        About us page.
+        <button @click="openSidebar">Open Sidebar</button>
+        <div v-text="values * 5"></div>
+    </nav>
+</template>
+
+<script>
+window.__component__ = {
+    data() {
+        return {
+            darkMode: false,
+            values : 5
+        };
+    },
+    methods: {
+        toggleTheme() {
+            this.darkMode = !this.darkMode;
+            document.body.classList.toggle("dark", this.darkMode);
+        },
+        openSidebar() {
+            this.emitter.emit("toggleSidebar"); // 🔥 Send event to toggle sidebar
+        },
+    },
+};
+</script>
+
+<style>
+nav {
+    background-color: navy;
+    padding: 10px;
+}
+button {
+    background: white;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+}
+</style>
