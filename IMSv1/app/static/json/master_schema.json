@@ -1,0 +1,32 @@
+{
+  "divisions": {
+    "name": "divisions",
+    "items": [
+      {
+        "name": "division_id",
+        "type": "text",
+        "label": "Division ID",
+        "required": true
+      },
+      {
+        "name": "division_name",
+        "type": "text",
+        "label": "Division Name",
+        "required": true
+      },
+      {
+        "name": "division_description",
+        "type": "text",
+        "label": "Division Description",
+        "required": true
+      },
+      {
+        "name": "division_head",
+        "type": "select",
+        "label": "Division Head",
+        "required": true,
+        "values" : []
+      }      
+    ]
+  }    
+}
