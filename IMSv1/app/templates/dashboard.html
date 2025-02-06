@@ -1,17 +1,8 @@
 {% extends "base.html" %}
-
 {% block content %}
-<div class="max-w-md mx-auto bg-white p-6 rounded shadow">
-    <h2 class="text-2xl mb-4">Dashboard</h2>
-    <div class="mb-4">
-        <a href="{{ url_for('indent.create_indent') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Create Indent</a>
-    </div>
-    <div class="mb-4">
-        <a href="{{ url_for('inventory.inventory') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Manage Inventory</a>
-    </div>
-    <div class="mb-4">
-        <a href="{{ url_for('user.users') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Manage Users</a>
-    </div>
+{% if session.user %}
+<div class="mt-8">
+    <h2 class="text-2xl mb-4">{{ greeting }}, {{ session.user.name }}</h2>
 </div>
 <div class="grid grid-cols-4 gap-4 mt-8">
     <div class="bg-white p-4 rounded shadow">
@@ -31,7 +22,12 @@
         <p class="text-3xl">{{ total_inventory_items }}</p>
     </div>
 </div>
-<div class="mt-8">
-    <h2 class="text-2xl mb-4">{{ greeting }}</h2>
+{% else %}
+<div class="bg-white p-4 rounded shadow mt-8 text-center">
+    <img src="https://erp.nicpr.org/nicpr_logo.png" alt="Logo" class="w-42 w-auto mx-auto">
+    <h2 class="text-2xl mb-4">Welcome to the Inventory Management System</h2>
+    <p class="text-gray-700">This portal is designed to manage inventory efficiently. It provides features to track users, indents, store masters, and inventory items. Please log in to access detailed data and features.</p>
 </div>
+{% endif %}
+
 {% endblock %}

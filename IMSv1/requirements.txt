@@ -3,4 +3,4 @@ Flask-WTF==1.0.1
 Flask-Login==0.6.2
 Flask-Migrate==4.0.0
 Flask-Bcrypt==1.0.1
-odeta==0.2.11
+odeta==0.2.12

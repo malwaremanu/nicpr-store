@@ -28,36 +28,12 @@ def index():
     return render_template('dashboard.html', total_users=total_users, total_indents=total_indents, total_store_masters=total_store_masters, total_inventory_items=total_inventory_items, greeting=greeting)
 
 @bp.route('/users', methods=['GET', 'POST'])
-def users():
-    if request.method == 'POST':
-        employee_id = request.form['employee_id']
-        name = request.form['name']
-        designation = request.form['designation']
-        division_id = request.form['division_id']
-        mobile_no = request.form['mobile_no']
-        email = request.form['email']
-        role = request.form['role']
-        status = request.form['status']
-
-        users_table = db('users')
-        new_user = {
-            'employee_id': employee_id,
-            'name': name,
-            'designation': designation,
-            'division_id': division_id,
-            'mobile_no': mobile_no,
-            'email': email,
-            'role': role,
-            'status': status
-        }
-        users_table.put(new_user)
-        flash('User created successfully', 'success')
-        return redirect(url_for('users'))
+def users():    
     users_table = db('users')
     all_users = users_table.fetchall()
     return render_template('user_form.html', users=all_users)
 
-@bp.route('/edit_user/<int:user_id>', methods=['GET', 'POST'])
+@bp.route('/edit_user/<user_id>', methods=['GET', 'POST'])
 def edit_user(user_id):
     users_table = db('users')
     user = users_table.get(user_id)
@@ -72,15 +48,15 @@ def edit_user(user_id):
         user['status'] = request.form['status']
         users_table.update(user, user_id)
         flash('User updated successfully', 'success')
-        return redirect(url_for('users'))
-    return render_template('user_form.html', user=user)
+        return redirect(url_for('user.users'))
+    return render_template('user_form.html', user=user, user_id=user_id)
 
-@bp.route('/delete_user/<int:user_id>', methods=['POST'])
+@bp.route('/delete_user/<user_id>', methods=['POST'])
 def delete_user(user_id):
     users_table = db('users')
     users_table.delete(user_id)
     flash('User deleted successfully', 'success')
-    return redirect(url_for('users'))
+    return redirect(url_for('user.users'))
 
 @bp.route('/change_password', methods=['GET', 'POST'])
 def change_password():
@@ -91,12 +67,13 @@ def change_password():
         new_password = request.form['new_password']
         user = users_table.get(user_id)
         if user:
-            user['password'] = generate_password_hash(new_password)
+            print("user found ->", user)
+            user['password'] = new_password
             users_table.update(user, user_id)
             flash('Password changed successfully', 'success')
         else:
             flash('User not found', 'error')
-        return redirect(url_for('change_password'))
+        return redirect(url_for('user.change_password'))
     return render_template('change_password.html', users=all_users)
 
 @bp.route('/create_user', methods=['GET', 'POST'])
@@ -111,6 +88,7 @@ def create_user():
         role = request.form['role']
         status = request.form['status']
         password = request.form['password']
+        permissions = request.form['permissions']
 
         users_table = db('users')
         new_user = {
@@ -121,10 +99,11 @@ def create_user():
             'mobile_no': mobile_no,
             'email': email,
             'role': role,
+            'permissions' : permissions,
             'status': status,
-            'password': generate_password_hash(password)
+            'password': password
         }
         users_table.put(new_user)
         flash('User created successfully', 'success')
-        return redirect(url_for('users'))
-    return render_template('create_user.html')
+        return redirect(url_for('user.users'))
+    return render_template('user_form.html')

@@ -1,66 +1,67 @@
 {% extends "base_user.html" %}
 
 {% block user_content %}
-<div class="max-w-md mx-auto bg-white p-6 rounded shadow">
-    <h2 class="text-2xl mb-4">Manage Users</h2>
-    <form method="POST" action="{{ url_for('user.users') }}" class="grid grid-cols-3 gap-2">
+<div class="mx-auto bg-white p-6 rounded shadow">
+    {{ user }}
+    <h2 class="text-2xl mb-4">{{ 'Edit User' if user else 'Create User' }}</h2>
+    <form method="POST" action="{{ url_for('user.edit_user', user_id=user_id) if user else url_for('user.create_user') }}" class="grid grid-cols-3 gap-2">
         <div class="mb-4">
             <label for="employee_id" class="block text-gray-700">Employee ID</label>
-            <input type="text" id="employee_id" name="employee_id" class="w-full px-3 py-2 border rounded" required>
+            <input type="text" id="employee_id" name="employee_id" class="w-full px-3 py-2 border rounded" value="{{ user.employee_id if user else '' }}" required>
         </div>
         <div class="mb-4">
             <label for="name" class="block text-gray-700">Name</label>
-            <input type="text" id="name" name="name" class="w-full px-3 py-2 border rounded" required>
+            <input type="text" id="name" name="name" class="w-full px-3 py-2 border rounded" value="{{ user.name if user else '' }}" required>
         </div>
         <div class="mb-4">
             <label for="designation" class="block text-gray-700">Designation</label>
-            <input type="text" id="designation" name="designation" class="w-full px-3 py-2 border rounded" required>
+            <input type="text" id="designation" name="designation" class="w-full px-3 py-2 border rounded" value="{{ user.designation if user else '' }}" required>
         </div>
         <div class="mb-4">
             <label for="division_id" class="block text-gray-700">Division ID</label>
-            <input type="text" id="division_id" name="division_id" class="w-full px-3 py-2 border rounded" required>
-        </div>
-        <div class="mb-4">
-            <label for="mobile_no" class="block text-gray-700">Mobile No.</label>
-            <input type="text" id="mobile_no" name="mobile_no" class="w-full px-3 py-2 border rounded" required>
-        </div>
-        <div class="mb-4">
-            <label for="email" class="block text-gray-700">Email</label>
-            <input type="email" id="email" name="email" class="w-full px-3 py-2 border rounded" required>
-        </div>
-        <div class="mb-4">
-            <label for="password" class="block text-gray-700">Password</label>
-            <input type="password" id="password" name="password" class="w-full px-3 py-2 border rounded" required>
+            <input type="text" id="division_id" name="division_id" class="w-full px-3 py-2 border rounded" value="{{ user.division_id if user else '' }}" required>
         </div>
         <div class="mb-4">
             <label for="Permissions" class="block text-gray-700">Permissions</label>
-            <input type="text" id="Permissions" name="Permissions" class="w-full px-3 py-2 border rounded" required>
+            <input type="text" id="permissions" name="permissions" class="w-full px-3 py-2 border rounded" value="{{ user.permissions if user else '' }}" required>
+        </div>
+        <div class="mb-4">
+            <label for="mobile_no" class="block text-gray-700">Mobile No.</label>
+            <input type="text" id="mobile_no" name="mobile_no" class="w-full px-3 py-2 border rounded" value="{{ user.mobile_no if user else '' }}" required>
+        </div>
+        <div class="mb-4">
+            <label for="email" class="block text-gray-700">Email</label>
+            <input type="email" id="email" name="email" class="w-full px-3 py-2 border rounded" value="{{ user.email if user else '' }}" required>
+        </div>
+        <div class="mb-4">
+            <label for="password" class="block text-gray-700">Password</label>
+            <input type="password" id="password" name="password" class="w-full px-3 py-2 border rounded" value="{{ user.password if user else '' }}" required>
         </div>
         <div class="mb-4">
             <label for="role" class="block text-gray-700">Role</label>
             <select id="role" name="role" class="w-full px-3 py-2 border rounded" required>
-                <option value="Superadmin">Superadmin</option>
-                <option value="Admin">Admin</option>
-                <option value="Store Assistant">Store Assistant</option>
-                <option value="Store Incharge">Store Incharge</option>
-                <option value="Head of Division">Head of Division</option>
-                <option value="Indentor">Indentor</option>
+                <option value="Superadmin" {% if user and user.role == 'Superadmin' %}selected{% endif %}>Superadmin</option>
+                <option value="Admin" {% if user and user.role == 'Admin' %}selected{% endif %}>Admin</option>
+                <option value="Store Assistant" {% if user and user.role == 'Store Assistant' %}selected{% endif %}>Store Assistant</option>
+                <option value="Store Incharge" {% if user and user.role == 'Store Incharge' %}selected{% endif %}>Store Incharge</option>
+                <option value="Head of Division" {% if user and user.role == 'Head of Division' %}selected{% endif %}>Head of Division</option>
+                <option value="Indentor" {% if user and user.role == 'Indentor' %}selected{% endif %}>Indentor</option>
             </select>
         </div>
         <div class="mb-4">
             <label for="status" class="block text-gray-700">Status</label>
             <select id="status" name="status" class="w-full px-3 py-2 border rounded" required>
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
+                <option value="Active" {% if user and user.status == 'Active' %}selected{% endif %}>Active</option>
+                <option value="Inactive" {% if user and user.status == 'Inactive' %}selected{% endif %}>Inactive</option>
             </select>
         </div>
         <div class="mb-4">
             <label for="" class="block text-gray-700">&nbsp;</label>
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-full">Add User</button>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-full">{{ 'Update User' if user else 'Add User' }}</button>
         </div>
     </form>
 </div>
-<div class="mt-8">
+<div class="mt-8" {% if user %}style="display:none;"{% endif %}>
     <h2 class="text-2xl mb-4">User List</h2>
     <table class="min-w-full bg-white">
         <thead>
