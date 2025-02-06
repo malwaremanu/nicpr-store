@@ -1,0 +1,106 @@
+Objective: Develop a store inventory and indent management system for a stationery shop using Flask, Tailwind CSS, and a JSON database. The system will allow users to log in, create indent requests, and manage the approval process through various roles.
+
+Detailed Plan:
+
+Project Setup:
+
+Initialize a Flask project with a basic structure.
+Set up Tailwind CSS for styling.
+Use a JSON file to simulate a database for storing user data, inventory items, and indent requests.
+User Authentication:
+
+Create routes for user login and registration.
+Implement session management to track logged-in users.
+Store user data (including roles) in the JSON database.
+Indent Management:
+
+Create Indent: Implement a route for users to create indent requests for items they need from the inventory.
+View Indents: Allow users to view their created indents and the status of each request.
+Approval Workflow:
+Reporting Officer: Create a route for the reporting officer to view and approve/deny indent requests from their subordinates.
+Store Admin: If approved by the reporting officer, the request is sent to the store admin for further processing.
+Store Assistant: The store admin forwards the request to the store assistant, who will fulfill the request if the items are available in the inventory.
+Inventory Management:
+
+Master Data: Create routes to store and manage master data for inventory items (e.g., pen, paper, scissors).
+View Inventory: Allow store admin and assistant to view the current inventory status.
+Update Inventory: Implement routes for adding new items to the inventory and updating existing item quantities.
+Frontend Design:
+
+Use Tailwind CSS to design the user interface, ensuring it is responsive and user-friendly.
+Create forms for user login, registration, creating indents, and managing inventory.
+Implement basic JavaScript for form validation and dynamic content updates.
+Backend Logic:
+
+Use Flask to handle routing, session management, and data processing.
+Implement JSON file operations to read from and write to the simulated database.
+Ensure data validation and error handling for all routes.
+Testing and Deployment:
+
+Test the application thoroughly to ensure all features work as expected.
+Deploy the application on a local server for demonstration purposes.
+Execution Steps:
+
+Initial Setup:
+
+Set up the Flask project and integrate Tailwind CSS.
+Create the JSON database structure for users, inventory, and indents.
+User Authentication:
+
+Implement user login, registration, and session management.
+Indent Management:
+
+Create routes for creating and viewing indents.
+Implement the approval workflow for reporting officers, store admin, and store assistant.
+Inventory Management:
+
+Create routes for managing inventory items.
+Implement views for store admin and assistant to manage the inventory.
+Frontend Development:
+
+Design the user interface using Tailwind CSS.
+Add JavaScript for interactivity and form validation.
+Backend Development:
+
+Implement Flask routes and logic for handling data operations.
+Ensure data validation and error handling.
+Testing and Deployment:
+
+Test the application and fix any issues.
+Deploy the application on a local server.
+
+Now, 
+I want my users in such a way that.
+
+1. Superadmin role
+2. Admin role.
+3. Store Assistant role
+4. Store Incharge role
+5. Head of Division - we will have a list of divisions in master database
+6. Indentor - the user who is raising the request for any item.
+
+now the user attributes are 
+Employee ID, Name, Designation, Division, Mobile No., Email ID, Role from above, Status - active / inactive.
+(Inactive users won't be able to login.)
+
+Division attributes will be 
+DivisionID, DivisionName, Head of Division - foreign key of user
+
+Now the inventory will be in this way.
+Store Master -> Record of all type of distinct items that can reside in store.
+so, unique store id, name, description, type (stock/non-stock), buffer quantity
+
+Inventory -> Record of all items received in store.
+Serial Number / Batch NUmber, store_id (FK of Store Master), description, date of procurement, warranty in months, expiry date, bill number, category (Equipment / Consumable / Stationary / Gift).
+
+Indents raised by users->
+Indent Number, Description, Indentor - user himself, date of creation, last updated, closed on, status (based on individual items in the indent, like Rejected / Completed / Partially Fulfilled), last action taken by which store-assistant, trail of activities related to indent (this items issued on this date... etc.), Priority, Remarks.
+
+Now the above indent will have multiple indent items, which will be stored in separate table.
+attributes will be like this
+Indent Number (FK of Indent Raised), required item (FK of Store Master, use select2 js to populate all store items, user may choose from store master or create new), Quantity, Status (Issued / Rejected), Action By (FK User - Store Assistant), Date, Issued Item (which items from inventory the user has been issued, FK of Inventory Table).
+
+
+Create a plan how will you create this and a flow chart.
+
+
