@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-6 rounded shadow">
+    <h2 class="text-2xl mb-4">Manage Inventory</h2>
+    <form method="POST" action="{{ url_for('inventory.inventory') }}">
+        <div class="mb-4">
+            <label for="store_id" class="block text-gray-700">Store ID</label>
+            <input type="text" id="store_id" name="store_id" class="w-full px-3 py-2 border rounded" required>
+        </div>
+        <div class="mb-4">
+            <label for="description" class="block text-gray-700">Description</label>
+            <textarea id="description" name="description" class="w-full px-3 py-2 border rounded" required></textarea>
+        </div>
+        <div class="mb-4">
+            <label for="date_of_procurement" class="block text-gray-700">Date of Procurement</label>
+            <input type="date" id="date_of_procurement" name="date_of_procurement" class="w-full px-3 py-2 border rounded" required>
+        </div>
+        <div class="mb-4">
+            <label for="warranty" class="block text-gray-700">Warranty</label>
+            <input type="text" id="warranty" name="warranty" class="w-full px-3 py-2 border rounded" required>
+        </div>
+        <div class="mb-4">
+            <label for="expiry_date" class="block text-gray-700">Expiry Date</label>
+            <input type="date" id="expiry_date" name="expiry_date" class="w-full px-3 py-2 border rounded" required>
+        </div>
+        <div class="mb-4">
+            <label for="bill_number" class="block text-gray-700">Bill Number</label>
+            <input type="text" id="bill_number" name="bill_number" class="w-full px-3 py-2 border rounded" required>
+        </div>
+        <div class="mb-4">
+            <label for="category" class="block text-gray-700">Category</label>
+            <select id="category" name="category" class="w-full px-3 py-2 border rounded" required>
+                <option value="Equipment">Equipment</option>
+                <option value="Consumable">Consumable</option>
+                <option value="Stationery">Stationery</option>
+                <option value="Gift">Gift</option>
+            </select>
+        </div>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Add Inventory</button>
+    </form>
+</div>
+{% endblock %}

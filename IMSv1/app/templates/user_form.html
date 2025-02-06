@@ -1,0 +1,101 @@
+{% extends "base_user.html" %}
+
+{% block user_content %}
+<div class="max-w-md mx-auto bg-white p-6 rounded shadow">
+    <h2 class="text-2xl mb-4">Manage Users</h2>
+    <form method="POST" action="{{ url_for('user.users') }}" class="grid grid-cols-3 gap-2">
+        <div class="mb-4">
+            <label for="employee_id" class="block text-gray-700">Employee ID</label>
+            <input type="text" id="employee_id" name="employee_id" class="w-full px-3 py-2 border rounded" required>
+        </div>
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700">Name</label>
+            <input type="text" id="name" name="name" class="w-full px-3 py-2 border rounded" required>
+        </div>
+        <div class="mb-4">
+            <label for="designation" class="block text-gray-700">Designation</label>
+            <input type="text" id="designation" name="designation" class="w-full px-3 py-2 border rounded" required>
+        </div>
+        <div class="mb-4">
+            <label for="division_id" class="block text-gray-700">Division ID</label>
+            <input type="text" id="division_id" name="division_id" class="w-full px-3 py-2 border rounded" required>
+        </div>
+        <div class="mb-4">
+            <label for="mobile_no" class="block text-gray-700">Mobile No.</label>
+            <input type="text" id="mobile_no" name="mobile_no" class="w-full px-3 py-2 border rounded" required>
+        </div>
+        <div class="mb-4">
+            <label for="email" class="block text-gray-700">Email</label>
+            <input type="email" id="email" name="email" class="w-full px-3 py-2 border rounded" required>
+        </div>
+        <div class="mb-4">
+            <label for="password" class="block text-gray-700">Password</label>
+            <input type="password" id="password" name="password" class="w-full px-3 py-2 border rounded" required>
+        </div>
+        <div class="mb-4">
+            <label for="Permissions" class="block text-gray-700">Permissions</label>
+            <input type="text" id="Permissions" name="Permissions" class="w-full px-3 py-2 border rounded" required>
+        </div>
+        <div class="mb-4">
+            <label for="role" class="block text-gray-700">Role</label>
+            <select id="role" name="role" class="w-full px-3 py-2 border rounded" required>
+                <option value="Superadmin">Superadmin</option>
+                <option value="Admin">Admin</option>
+                <option value="Store Assistant">Store Assistant</option>
+                <option value="Store Incharge">Store Incharge</option>
+                <option value="Head of Division">Head of Division</option>
+                <option value="Indentor">Indentor</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="status" class="block text-gray-700">Status</label>
+            <select id="status" name="status" class="w-full px-3 py-2 border rounded" required>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="" class="block text-gray-700">&nbsp;</label>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-full">Add User</button>
+        </div>
+    </form>
+</div>
+<div class="mt-8">
+    <h2 class="text-2xl mb-4">User List</h2>
+    <table class="min-w-full bg-white">
+        <thead>
+            <tr>
+                <th class="py-2 px-4 border-b">Employee ID</th>
+                <th class="py-2 px-4 border-b">Name</th>
+                <th class="py-2 px-4 border-b">Designation</th>
+                <th class="py-2 px-4 border-b">Division ID</th>
+                <th class="py-2 px-4 border-b">Mobile No.</th>
+                <th class="py-2 px-4 border-b">Email</th>
+                <th class="py-2 px-4 border-b">Role</th>
+                <th class="py-2 px-4 border-b">Status</th>
+                <th class="py-2 px-4 border-b">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td class="py-2 px-4 border-b">{{ user.employee_id }}</td>
+                <td class="py-2 px-4 border-b">{{ user.name }}</td>
+                <td class="py-2 px-4 border-b">{{ user.designation }}</td>
+                <td class="py-2 px-4 border-b">{{ user.division_id }}</td>
+                <td class="py-2 px-4 border-b">{{ user.mobile_no }}</td>
+                <td class="py-2 px-4 border-b">{{ user.email }}</td>
+                <td class="py-2 px-4 border-b">{{ user.role }}</td>
+                <td class="py-2 px-4 border-b">{{ user.status }}</td>
+                <td class="py-2 px-4 border-b">
+                    <a href="{{ url_for('user.edit_user', user_id=user.id) }}" class="text-blue-500">Edit</a>
+                    <form action="{{ url_for('user.delete_user', user_id=user.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="text-red-500">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

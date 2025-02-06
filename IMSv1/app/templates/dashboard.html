@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-6 rounded shadow">
+    <h2 class="text-2xl mb-4">Dashboard</h2>
+    <div class="mb-4">
+        <a href="{{ url_for('indent.create_indent') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Create Indent</a>
+    </div>
+    <div class="mb-4">
+        <a href="{{ url_for('inventory.inventory') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Manage Inventory</a>
+    </div>
+    <div class="mb-4">
+        <a href="{{ url_for('user.users') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Manage Users</a>
+    </div>
+</div>
+<div class="grid grid-cols-4 gap-4 mt-8">
+    <div class="bg-white p-4 rounded shadow">
+        <h3 class="text-xl mb-2">Total Users</h3>
+        <p class="text-3xl">{{ total_users }}</p>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+        <h3 class="text-xl mb-2">Total Indents</h3>
+        <p class="text-3xl">{{ total_indents }}</p>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+        <h3 class="text-xl mb-2">Total Store Masters</h3>
+        <p class="text-3xl">{{ total_store_masters }}</p>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+        <h3 class="text-xl mb-2">Total Inventory Items</h3>
+        <p class="text-3xl">{{ total_inventory_items }}</p>
+    </div>
+</div>
+<div class="mt-8">
+    <h2 class="text-2xl mb-4">{{ greeting }}</h2>
+</div>
+{% endblock %}

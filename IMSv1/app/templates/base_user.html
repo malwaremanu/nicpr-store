@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex">
+    <div class="w-1/4 bg-gray-800 text-white p-4">
+        <ul>
+            <li class="mb-2"><a href="{{ url_for('user.change_password') }}" class="text-white">Change Password</a></li>
+            <li class="mb-2"><a href="{{ url_for('user.create_user') }}" class="text-white">Create New User</a></li>
+            <li class="mb-2"><a href="{{ url_for('user.users') }}" class="text-white">View All Users</a></li>
+        </ul>
+    </div>
+    <div class="w-3/4 p-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="p-4 mb-4 text-sm text-white bg-{{ category }}-600 rounded-lg" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block user_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}
