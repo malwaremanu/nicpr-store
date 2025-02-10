@@ -3,11 +3,20 @@
 {% block content %}
 <div class="flex">
     <div class="w-1/5 bg-gray-800 text-white p-4">
-        <ul>
-            <li class="mb-2"><a href="{{ url_for('user.change_password') }}" class="text-white">Change Password</a></li>
-            <li class="mb-2"><a href="{{ url_for('user.create_user') }}" class="text-white">Create New User</a></li>
-            <li class="mb-2"><a href="{{ url_for('user.users') }}" class="text-white">View All Users</a></li>
-        </ul>
+        {% if request.endpoint == "user.users" %}
+            <ul>
+                <li class="mb-2"><a href="{{ url_for('user.change_password') }}" class="text-white">Change Password</a></li>
+                <li class="mb-2"><a href="{{ url_for('user.create_user') }}" class="text-white">Create New User</a></li>
+                <li class="mb-2"><a href="{{ url_for('user.users') }}" class="text-white">View All Users</a></li>
+            </ul>
+        {% endif %}
+
+        {% if request.endpoint == "master.crud" %}
+            <ul>
+                <li class="mb-2"><a href="/masters/divisions" class="text-white">Divisions</a></li>                
+            </ul>
+        {% endif %}        
+
     </div>
     <div class="w-4/5 p-4">
         {% with messages = get_flashed_messages(with_categories=true) %}

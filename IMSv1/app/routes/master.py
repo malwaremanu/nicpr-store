@@ -11,25 +11,25 @@ schema = {
       {
         "name": "division_id",
         "type": "text",
-        "label": "Division ID",
+        "label": "ID",
         "required": True
       },
       {
         "name": "division_name",
         "type": "text",
-        "label": "Division Name",
+        "label": "Name",
         "required": True
       },
       {
         "name": "division_description",
         "type": "text",
-        "label": "Division Description",
+        "label": "Description",
         "required": True
       },
       {
         "name": "division_head",
         "type": "select",
-        "label": "Division Head",
+        "label": "Head",
         "required": True,
         "values" : [ str(a['name']) + ' (' + str(a['employee_id']) + ")"for a in db('users').fetch()]
       }      
@@ -54,12 +54,10 @@ def crud(entity):
 
 @bp.route('/masters/<entity>/<item_id>', methods=['GET', 'PUT', 'DELETE'])
 def crud_item(entity, item_id):
-    schema_path = f'app/static/json/{entity}_schema.json'
-    with open(schema_path, 'r') as f:
-        schema = json.load(f)
-
+    sc = schema[entity]
     master_table = db(entity)
     item = master_table.get(item_id)
+    print(item)
 
     if request.method == 'PUT':
         data = request.json
@@ -70,4 +68,4 @@ def crud_item(entity, item_id):
         master_table.delete(item_id)
         return jsonify({'message': 'Item deleted successfully'}), 200
 
-    return render_template('master.html', item=item, schema=schema)
+    return render_template('master.html', item=item, schema=sc, item_id=item_id)
