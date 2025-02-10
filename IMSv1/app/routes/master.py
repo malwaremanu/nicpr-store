@@ -31,11 +31,12 @@ schema = {
         "type": "select",
         "label": "Division Head",
         "required": True,
-        "values" : []
+        "values" : [ str(a['name']) + ' (' + str(a['employee_id']) + ")"for a in db('users').fetch()]
       }      
     ]
   }    
 }
+
 @bp.route('/masters/<entity>', methods=['GET', 'POST'])
 def crud(entity):    
     sc = schema[entity]
@@ -43,11 +44,12 @@ def crud(entity):
         data = request.json
         master_table = db(entity)
         master_table.put(data)
+        print("done.", data)
         return jsonify({'message': 'Item added successfully'}), 201
 
     master_table = db(entity)
     all_items = master_table.fetchall()
-    print(all_items)
+    print(sc)
     return render_template('master.html', items=all_items, schema=sc)
 
 @bp.route('/masters/<entity>/<item_id>', methods=['GET', 'PUT', 'DELETE'])
