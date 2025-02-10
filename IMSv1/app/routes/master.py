@@ -47,6 +47,7 @@ def crud(entity):
 
     master_table = db(entity)
     all_items = master_table.fetchall()
+    print(all_items)
     return render_template('master.html', items=all_items, schema=sc)
 
 @bp.route('/masters/<entity>/<item_id>', methods=['GET', 'PUT', 'DELETE'])
