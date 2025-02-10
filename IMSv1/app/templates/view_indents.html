@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-white p-6 rounded shadow">
+    <h2 class="text-2xl mb-4">View Indents</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="p-4 mb-4 text-sm text-white bg-{{ category }}-600 rounded-lg" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <table class="min-w-full bg-white">
+        <thead>
+            <tr>
+                <th class="py-2 px-4 border-b">Indent Number</th>
+                <th class="py-2 px-4 border-b">Description</th>
+                <th class="py-2 px-4 border-b">Indentor</th>
+                <th class="py-2 px-4 border-b">Date Created</th>
+                <th class="py-2 px-4 border-b">Status</th>
+                <th class="py-2 px-4 border-b">Priority</th>
+                <th class="py-2 px-4 border-b">Remarks</th>
+                <th class="py-2 px-4 border-b">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for indent in indents %}
+            <tr>
+                <td class="py-2 px-4 border-b">{{ indent.id }}</td>
+                <td class="py-2 px-4 border-b">{{ indent.description }}</td>
+                <td class="py-2 px-4 border-b">{{ indent.indentor_id }}</td>
+                <td class="py-2 px-4 border-b">{{ indent.date_created }}</td>
+                <td class="py-2 px-4 border-b">{{ indent.status }}</td>
+                <td class="py-2 px-4 border-b">{{ indent.priority }}</td>
+                <td class="py-2 px-4 border-b">{{ indent.remarks }}</td>
+                <td class="py-2 px-4 border-b">
+                    <form action="{{ url_for('indent.approve_indent', indent_id=indent.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="text-blue-500">Approve</button>
+                    </form>
+                    <form action="{{ url_for('indent.reject_indent', indent_id=indent.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="text-red-500">Reject</button>
+                    </form>
+                    <form action="{{ url_for('indent.fulfill_indent', indent_id=indent.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="text-green-500">Fulfill</button>
+                    </form>
+                    <a href="{{ url_for('indent.add_indent_item', indent_id=indent.id) }}" class="text-blue-500">Add Item</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
