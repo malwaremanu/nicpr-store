@@ -32,6 +32,12 @@
                 <div class="">
                     <a href="{{ url_for('user.users') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Manage Users</a>
                 </div>
+                <div class="">
+                    <a href="{{ url_for('master.crud',entity='divisions') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Manage Divisions</a>
+                </div>
+                <div class="">
+                    <a href="{{ url_for('master.crud',entity='store_items') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Manage Store Items</a>
+                </div>
                 <div>
                     Hi {{ session.user.name }} <a href="{{ url_for('auth.logout') }}" class="bg-red-500 text-white px-4 py-2 rounded">Logout</a>
                 </div>

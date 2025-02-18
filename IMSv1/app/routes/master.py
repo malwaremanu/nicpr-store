@@ -34,13 +34,88 @@ schema = {
         "values" : [ str(a['name']) + ' (' + str(a['employee_id']) + ")"for a in db('users').fetch()]
       }      
     ]
-  }    
+  },
+
+  "store_items": {
+    "name": "store items",
+    "items": [
+      {
+        "name": "item_id",
+        "type": "text",
+        "label": "Store Item ID",
+        "required": True
+      },
+      {
+        "name": "item_name",
+        "type": "text",
+        "label": "Item Name",
+        "required": True
+      },
+      {
+        "name": "item_description",
+        "type": "text",
+        "label": "Item Description",
+        "required": True
+      },
+      {
+        "name": "item_type",
+        "type": "select",
+        "label": "Item Type",
+        "required": True,
+        "values" : ['Stock','Non_Stock']
+      },
+      {
+        "name": "buffer_quantity",
+        "type": "text",
+        "label": "Buffer Quantity",
+        "required": True
+      }    
+    ]
+  },
+
+  "inventory": {
+    "name": "inventory",
+    "items": [
+      {
+        "name": "item_id",
+        "type": "text",
+        "label": "Store Item ID",
+        "required": True
+      },
+      {
+        "name": "serial_number",
+        "type": "text",
+        "label": "Item N",
+        "required": True
+      },
+      {
+        "name": "item_description",
+        "type": "text",
+        "label": "Item Description",
+        "required": True
+      },
+      {
+        "name": "item_type",
+        "type": "select",
+        "label": "Item Type",
+        "required": True,
+        "values" : ['Stock','Non_Stock']
+      },
+      {
+        "name": "buffer_quantity",
+        "type": "text",
+        "label": "Buffer Quantity",
+        "required": True
+      }    
+    ]
+  }  
+    
 }
 
-@bp.route('/masters/<entity>', methods=['GET', 'POST'])
+@bp.route('/masters/<entity>', methods=['GET','PUT'])
 def crud(entity):    
     sc = schema[entity]
-    if request.method == 'POST':
+    if request.method == 'PUT':
         data = request.json
         master_table = db(entity)
         master_table.put(data)
