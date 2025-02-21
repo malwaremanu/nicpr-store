@@ -6,13 +6,15 @@ bp = Blueprint('indent', __name__)
 
 @bp.route('/create_indent', methods=['GET', 'POST'])
 def create_indent():
+    indents = db('indents')
     if request.method == 'POST':
-        description = request.form['description']
+        # indent_number = '123' nomenclature to be decided
         indentor_id = session['user']['name']
-        priority = request.form['priority']
-        remarks = request.form['remarks']
-
-        indents_table = db('indents')
+        items = request.form['items']
+        # quantity = request.form['quantity']
+        # remarks = request.form['remarks']
+        # priority = request.form['priority']
+        
         new_indent = {
             'description': description,
             'indentor_id': indentor_id,
@@ -22,10 +24,10 @@ def create_indent():
             'priority': priority,
             'remarks': remarks
         }
-        indents_table.put(new_indent)
+        indents.put(new_indent)
         flash('Indent created successfully', 'success')
         return redirect(url_for('indent.view_indents'))
-    return render_template('indent_form.html')
+    return render_template('indent_form.html',indents=indents.fetchall())
 
 @bp.route('/view_indents', methods=['GET'])
 def view_indents():

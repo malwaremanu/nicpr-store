@@ -13,6 +13,8 @@
                     <input type="text" name="{{ details['name'] }}" class="w-full px-3 py-2 border rounded" required>
                 {% elif details['type'] == 'number' %}
                     <input type="number" name="{{ details['name'] }}" class="w-full px-3 py-2 border rounded" required>
+                {% elif details['type'] == 'date' %}
+                    <input type="date" name="{{ details['name'] }}" class="w-full px-3 py-2 border rounded" required>
                 {% elif details['type'] == 'select' %}
                     <select name="{{ details['name'] }}" class="w-full px-3 py-2 border rounded" required>
                         {% for option in details['values'] %}
@@ -38,6 +40,8 @@
                     <input type="text" name="{{ details['name'] }}" class="w-full px-3 py-2 border rounded" required value="{{ item[details['name']] }}">
                 {% elif details['type'] == 'number' %}
                     <input type="number" name="{{ details['name'] }}" class="w-full px-3 py-2 border rounded" required value="{{ item[details['name']] }}">
+                {% elif details['type'] == 'date' %}
+                    <input type="date" name="{{ details['name'] }}" class="w-full px-3 py-2 border rounded" required value="{{ item[details['name']] }}">
                 {% elif details['type'] == 'select' %}
                     <select name="{{ details['name'] }}" class="w-full px-3 py-2 border rounded" required value="">
                         {% for option in details['values'] %}

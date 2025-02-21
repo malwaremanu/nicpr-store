@@ -78,15 +78,23 @@ schema = {
     "items": [
       {
         "name": "item_id",
-        "type": "text",
-        "label": "Store Item ID",
-        "required": True
+        "type": "select",
+        "label": "Store Item ID/Name",
+        "required": True,
+        "values" : [ str(a['item_id']) + '-' + str(a['item_name']) for a in db('store_items').fetch()]
       },
       {
         "name": "serial_number",
         "type": "text",
-        "label": "Item N",
+        "label": "Serial Number/Batch Number",
         "required": True
+      },
+      {
+        "name": "category",
+        "type": "select",
+        "label": "Item Category",
+        "required": True,
+        "values" : ['Equipment/Asset','Consumable','Stationary','Gift']
       },
       {
         "name": "item_description",
@@ -95,18 +103,48 @@ schema = {
         "required": True
       },
       {
-        "name": "item_type",
-        "type": "select",
-        "label": "Item Type",
-        "required": True,
-        "values" : ['Stock','Non_Stock']
+        "name": "quantity",
+        "type": "number",
+        "label": "Quantity",
+        "required": True
       },
       {
-        "name": "buffer_quantity",
-        "type": "text",
-        "label": "Buffer Quantity",
+        "name": "receipt_date",
+        "type": "date",
+        "label": "Date of Receipt",
         "required": True
-      }    
+      },
+      {
+        "name": "bill_number",
+        "type": "text",
+        "label": "Bill Number",
+        "required": True
+      }   
+    ]
+  },
+
+  "indents": {
+    "name": "indents",
+    "items": [
+      {
+        "name": "item_id",
+        "type": "select",
+        "label": "Store Item ID/Name",
+        "required": True,
+        "values" : [ str(a['item_id']) + '-' + str(a['item_name']) for a in db('store_items').fetch()]
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "label": "Required Quantity",
+        "required": True
+      },
+      {
+        "name": "remarks",
+        "type": "text",
+        "label": "Remarks",
+        "required": True
+      }
     ]
   }  
     
