@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard - Store Management System{% endblock %}
+
+{% block content %}
+<h2>Admin Dashboard</h2>
+
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Total Items</h5>
+                <h1 class="display-4">{{ item_count }}</h1>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="{{ url_for('admin_items') }}">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Low Stock Items</h5>
+                <h1 class="display-4">{{ low_stock|length }}</h1>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="{{ url_for('inventory_list') }}">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Pending Requests</h5>
+                <h1 class="display-4">{{ request_stats.pending }}</h1>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="{{ url_for('request_list') }}">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Fulfilled Requests</h5>
+                <h1 class="display-4">{{ request_stats.fulfilled }}</h1>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="{{ url_for('request_list') }}">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Items by Category</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for category, count in categories.items() %}
+                            <tr>
+                                <td>{{ category }}</td>
+                                <td>{{ count }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Low Stock Items</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Current Stock</th>
+                                <th>Minimum Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in low_stock %}
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td class="text-danger">{{ item.current }}</td>
+                                <td>{{ item.min }}</td>
+                            </tr>
+                            {% endfor %}
+                            {% if not low_stock %}
+                            <tr>
+                                <td colspan="3" class="text-center">No low stock items</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

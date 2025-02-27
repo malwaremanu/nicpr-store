@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Users - Store Management System{% endblock %}
+
+{% block content %}
+<h2>Manage Users</h2>
+
+<div class="card mt-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Division</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.role }}</td>
+                        <td>{{ user.division }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

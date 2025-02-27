@@ -1,0 +1,41 @@
+store_management_system/
+│
+├── app.py                  # Main Flask application file
+├── config.py               # Configuration settings
+├── models/                 # Data models
+│   ├── __init__.py
+│   ├── item.py             # Item model
+│   ├── inventory.py        # Inventory model
+│   ├── request.py          # Request model
+│   └── user.py             # User model (simplified)
+│
+├── routes/                 # Route handlers
+│   ├── __init__.py
+│   ├── auth.py             # Authentication routes
+│   ├── admin.py            # Admin panel routes
+│   ├── inventory.py        # Inventory management routes
+│   └── request.py          # Request processing routes
+│
+├── static/                 # Static files
+│   ├── css/
+│   │   └── main.css        # Main stylesheet
+│   └── js/
+│       └── main.js         # JavaScript functions
+│
+└── templates/              # HTML templates
+    ├── base.html           # Base template
+    ├── auth/
+    │   ├── login.html      # Login page
+    │   └── profile.html    # User profile
+    ├── admin/
+    │   ├── dashboard.html  # Admin dashboard
+    │   ├── items.html      # Item management
+    │   └── users.html      # User management
+    ├── inventory/
+    │   ├── list.html       # Inventory list
+    │   └── detail.html     # Inventory detail
+    └── request/
+        ├── new.html        # New request form
+        ├── list.html       # Request list
+        ├── detail.html     # Request detail
+        └── approval.html   # Request approval

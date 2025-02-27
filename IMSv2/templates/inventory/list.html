@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Inventory - Store Management System{% endblock %}
+
+{% block content %}
+<h2>Inventory List</h2>
+
+<div class="card mt-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Item Name</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for inv in inventory %}
+                    <tr>
+                        <td>{{ inv.id }}</td>
+                        <td>{{ inv.name }}</td>
+                        <td>{{ inv.category }}</td>
+                        <td class="{% if inv.is_low %}text-danger{% endif %}">
+                            {{ inv.quantity }}
+                            {% if inv.is_low %}<span class="badge bg-danger">Low Stock</span>{% endif %}
+                        </td>
+                        <td>{{ inv.location }}</td>
+                        <td>
+                            {% if inv.quantity == 0 %}
+                                <span class="badge bg-danger">Out of Stock</span>
+                            {% elif inv.is_low %}
+                                <span class="badge bg-warning text-dark">Low Stock</span>
+                            {% else %}
+                                <span class="badge bg-success">In Stock</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('inventory_detail', id=inv.id) }}" class="btn btn-sm btn-info">Details</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% if not inventory %}
+                    <tr>
+                        <td colspan="7" class="text-center">No inventory items found</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

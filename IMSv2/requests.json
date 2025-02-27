@@ -1,0 +1,80 @@
+{
+    "1": {
+        "id": "1",
+        "requester_id": "6",
+        "requester_name": "user1",
+        "division_id": "1",
+        "date": "2025-02-27 11:13:30",
+        "status": "fulfilled",
+        "items": [
+            {
+                "item_id": "1",
+                "quantity": 2,
+                "fulfilled": 2,
+                "status": "fulfilled"
+            },
+            {
+                "item_id": "2",
+                "quantity": 10,
+                "fulfilled": 10,
+                "status": "fulfilled"
+            }
+        ],
+        "remarks": "\n[div_head]: Approved\n[store_incharge]: Approved\n[assistant]: Fulfilled items",
+        "current_approver": "fulfilled"
+    },
+    "2": {
+        "id": "2",
+        "requester_id": "6",
+        "requester_name": "user1",
+        "division_id": "1",
+        "date": "2025-02-27 11:49:58",
+        "status": "rejected",
+        "items": [
+            {
+                "item_id": "1",
+                "quantity": 6,
+                "fulfilled": 0,
+                "status": "pending"
+            }
+        ],
+        "remarks": "I need 7 laptops.\n[div_head]: Rejected - not authorised.",
+        "current_approver": "rejected"
+    },
+    "3": {
+        "id": "3",
+        "requester_id": "6",
+        "requester_name": "user1",
+        "division_id": "1",
+        "date": "2025-02-27 11:59:04",
+        "status": "partially_fulfilled",
+        "items": [
+            {
+                "item_id": "5",
+                "quantity": 201,
+                "fulfilled": 200,
+                "status": "partially_fulfilled"
+            }
+        ],
+        "remarks": "i need 201 pens\n[div_head]: Approved\n[store_incharge]: Approved\n[assistant]: Fulfilled items",
+        "current_approver": "fulfilled"
+    },
+    "4": {
+        "id": "4",
+        "requester_id": "6",
+        "requester_name": "user1",
+        "division_id": "1",
+        "date": "2025-02-27 12:08:41",
+        "status": "pending",
+        "items": [
+            {
+                "item_id": "2",
+                "quantity": 5,
+                "fulfilled": 0,
+                "status": "pending"
+            }
+        ],
+        "remarks": "\n[div_head]: Approved",
+        "current_approver": "store_incharge"
+    }
+}

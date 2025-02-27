@@ -1,0 +1,17 @@
+{
+    "1": {
+        "id": "1",
+        "name": "IT Department",
+        "head_id": "3"
+    },
+    "2": {
+        "id": "2",
+        "name": "Finance Department",
+        "head_id": null
+    },
+    "3": {
+        "id": "3",
+        "name": "HR Department",
+        "head_id": null
+    }
+}

@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}Request Approval{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Review Request #{{ reqst.id }}</h2>
+        <a href="{{ url_for('request_detail', id=reqst.id) }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Details
+        </a>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Request Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <strong>Requested By:</strong> {{ reqst.requester_name }}
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Date:</strong> {{ reqst.date }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Remarks:</strong>
+                        <pre class="mt-2 p-2 bg-light">{{ reqst.remarks }}</pre>
+                    </div>
+                    
+                    <h6 class="mt-4 mb-3">Requested Items:</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                <tr>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Approval Decision</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{{ url_for('request_approve', id=reqst.id) }}">
+                        <div class="mb-3">
+                            <label class="form-label">Your Decision:</label>
+                            <div class="d-flex flex-column flex-md-row gap-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="action" id="approve" value="approve" checked>
+                                    <label class="form-check-label" for="approve">
+                                        Approve
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="action" id="reject" value="reject">
+                                    <label class="form-check-label" for="reject">
+                                        Reject
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="reject-reason-container" class="mb-3 d-none">
+                            <label for="reject_reason" class="form-label">Reason for Rejection:</label>
+                            <textarea class="form-control" id="reject_reason" name="reject_reason" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{{ url_for('request_detail', id=reqst.id) }}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Submit Decision</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+    // Show/hide rejection reason based on decision
+    document.addEventListener('DOMContentLoaded', function() {
+        const approveRadio = document.getElementById('approve');
+        const rejectRadio = document.getElementById('reject');
+        const rejectReasonContainer = document.getElementById('reject-reason-container');
+        
+        function updateReasonVisibility() {
+            if (rejectRadio.checked) {
+                rejectReasonContainer.classList.remove('d-none');
+            } else {
+                rejectReasonContainer.classList.add('d-none');
+            }
+        }
+        
+        approveRadio.addEventListener('change', updateReasonVisibility);
+        rejectRadio.addEventListener('change', updateReasonVisibility);
+    });
+</script>
+{% endblock %}
+
+{% endblock %}

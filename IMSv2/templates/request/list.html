@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}My Requests{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>
+            {% if user_role == 'user' %}
+                My Requests
+            {% elif user_role == 'division_head' %}
+                Division Requests
+            {% elif user_role == 'store_incharge' %}
+                Requests For Approval
+            {% elif user_role == 'store_assistant' %}
+                Requests To Fulfill
+            {% else %}
+                All Requests
+            {% endif %}
+        </h2>
+        
+        {% if user_role == 'user' %}
+        <a href="{{ url_for('request_new') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> New Request
+        </a>
+        {% endif %}
+    </div>
+
+    {% if requests %}
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Date</th>
+                            <th>Requester</th>
+                            <th>Status</th>
+                            <th>Current Stage</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for request in requests %}
+                        <tr>
+                            <td>{{ request.id }}</td>
+                            <td>{{ request.date }}</td>
+                            <td>{{ request.requester_name }}</td>
+                            <td>
+                                {% if request.status == 'pending' %}
+                                <span class="badge bg-warning">Pending</span>
+                                {% elif request.status == 'approved' %}
+                                <span class="badge bg-success">Approved</span>
+                                {% elif request.status == 'partially_fulfilled' %}
+                                <span class="badge bg-info">Partially Fulfilled</span>
+                                {% elif request.status == 'fulfilled' %}
+                                <span class="badge bg-success">Fulfilled</span>
+                                {% elif request.status == 'rejected' %}
+                                <span class="badge bg-danger">Rejected</span>
+                                {% else %}
+                                <span class="badge bg-secondary">{{ request.status }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if request.current_approver == 'division_head' %}
+                                <span class="text-primary">Division Head Review</span>
+                                {% elif request.current_approver == 'store_incharge' %}
+                                <span class="text-primary">Store Incharge Review</span>
+                                {% elif request.current_approver == 'store_assistant' %}
+                                <span class="text-primary">Store Assistant Fulfillment</span>
+                                {% elif request.current_approver == 'fulfilled' %}
+                                <span class="text-success">Complete</span>
+                                {% elif request.current_approver == 'rejected' %}
+                                <span class="text-danger">Rejected</span>
+                                {% else %}
+                                <span>{{ request.current_approver }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ url_for('request_detail', id=request.id) }}" class="btn btn-sm btn-outline-primary">
+                                    View Details
+                                </a>
+                                
+                                {% if user_role == 'division_head' and request.current_approver == 'division_head' %}
+                                <a href="{{ url_for('request_approve', id=request.id) }}" class="btn btn-sm btn-success">
+                                    Review
+                                </a>
+                                {% endif %}
+                                
+                                {% if user_role == 'store_incharge' and request.current_approver == 'store_incharge' %}
+                                <a href="{{ url_for('request_approve', id=request.id) }}" class="btn btn-sm btn-success">
+                                    Review
+                                </a>
+                                {% endif %}
+                                
+                                {% if user_role == 'store_assistant' and request.current_approver == 'store_assistant' %}
+                                <a href="{{ url_for('request_fulfill', id=request.id) }}" class="btn btn-sm btn-success">
+                                    Fulfill
+                                </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        No requests found.
+        {% if user_role == 'user' %}
+        <a href="{{ url_for('request_new') }}" class="alert-link">Create a new request</a>.
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

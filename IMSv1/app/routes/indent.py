@@ -23,7 +23,7 @@ def create_indent():
             'status': 'Pending',
             'priority': priority,
             'remarks': remarks
-        }
+        } 
         indents.put(new_indent)
         flash('Indent created successfully', 'success')
         return redirect(url_for('indent.view_indents'))

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Items - Store Management System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Manage Items</h2>
+    <a href="{{ url_for('admin_add_item') }}" class="btn btn-primary">Add New Item</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Current Stock</th>
+                        <th>Min Stock</th>
+                        <th>Unit Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.category }}</td>
+                        <td class="{% if item.current_stock < item.min_stock %}text-danger{% endif %}">
+                            {{ item.current_stock }}
+                        </td>
+                        <td>{{ item.min_stock }}</td>
+                        <td>${{ "%.2f"|format(item.unit_price) }}</td>
+                        <td>
+                            <a href="{{ url_for('admin_edit_item', id=item.id) }}" class="btn btn-sm btn-primary">Edit</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% if not items %}
+                    <tr>
+                        <td colspan="7" class="text-center">No items found</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}Inventory Detail - Store Management System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Inventory Detail: {{ item.name }}</h2>
+    <a href="{{ url_for('inventory_list') }}" class="btn btn-secondary">Back to List</a>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Item Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-md-4 fw-bold">ID:</div>
+                    <div class="col-md-8">{{ item.id }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4 fw-bold">Name:</div>
+                    <div class="col-md-8">{{ item.name }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4 fw-bold">Description:</div>
+                    <div class="col-md-8">{{ item.description }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4 fw-bold">Category:</div>
+                    <div class="col-md-8">{{ item.category }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4 fw-bold">Unit Price:</div>
+                    <div class="col-md-8">${{ "%.2f"|format(item.unit_price) }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Inventory Status</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-md-4 fw-bold">Current Quantity:</div>
+                    <div class="col-md-8 {% if inventory.quantity < item.min_stock %}text-danger{% endif %}">
+                        {{ inventory.quantity }}
+                        {% if inventory.quantity < item.min_stock %}<span class="badge bg-danger">Low Stock</span>{% endif %}
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4 fw-bold">Minimum Stock:</div>
+                    <div class="col-md-8">{{ item.min_stock }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4 fw-bold">Storage Location:</div>
+                    <div class="col-md-8">{{ inventory.location }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4 fw-bold">Status:</div>
+                    <div class="col-md-8">
+                        {% if inventory.quantity == 0 %}
+                            <span class="badge bg-danger">Out of Stock</span>
+                        {% elif inventory.quantity < item.min_stock %}
+                            <span class="badge bg-warning text-dark">Low Stock</span>
+                        {% else %}
+                            <span class="badge bg-success">In Stock</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Request History</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Date</th>
+                        <th>Requester</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in request_history %}
+                    <tr>
+                        <td>{{ req.id }}</td>
+                        <td>{{ req.date }}</td>
+                        <td>{{ req.requester }}</td>
+                        <td>{{ req.quantity }}</td>
+                        <td>
+                            {% if req.status == 'pending' %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            {% elif req.status == 'fulfilled' %}
+                                <span class="badge bg-success">Fulfilled</span>
+                            {% elif req.status == 'partially_fulfilled' %}
+                                <span class="badge bg-info">Partially Fulfilled</span>
+                            {% elif req.status == 'rejected' %}
+                                <span class="badge bg-danger">Rejected</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ req.status }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% if not request_history %}
+                    <tr>
+                        <td colspan="5" class="text-center">No request history for this item</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block title %}Request Details{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Request #{{ request.id }}</h2>
+        <a href="{{ url_for('request_list') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> Back to List
+        </a>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Request Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <strong>Requested By:</strong> {{ request.requester_name }}
+                    </div>
+                    <div class="mb-3">
+                        <strong>Date:</strong> {{ request.date }}
+                    </div>
+                    <div class="mb-3">
+                        <strong>Status:</strong>
+                        {% if request.status == 'pending' %}
+                        <span class="badge bg-warning">Pending</span>
+                        {% elif request.status == 'approved' %}
+                        <span class="badge bg-success">Approved</span>
+                        {% elif request.status == 'partially_fulfilled' %}
+                        <span class="badge bg-info">Partially Fulfilled</span>
+                        {% elif request.status == 'fulfilled' %}
+                        <span class="badge bg-success">Fulfilled</span>
+                        {% elif request.status == 'rejected' %}
+                        <span class="badge bg-danger">Rejected</span>
+                        {% else %}
+                        <span class="badge bg-secondary">{{ request.status }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <strong>Current Stage:</strong>
+                        {% if request.current_approver == 'division_head' %}
+                        <span class="text-primary">Division Head Review</span>
+                        {% elif request.current_approver == 'store_incharge' %}
+                        <span class="text-primary">Store Incharge Review</span>
+                        {% elif request.current_approver == 'store_assistant' %}
+                        <span class="text-primary">Store Assistant Fulfillment</span>
+                        {% elif request.current_approver == 'fulfilled' %}
+                        <span class="text-success">Complete</span>
+                        {% elif request.current_approver == 'rejected' %}
+                        <span class="text-danger">Rejected</span>
+                        {% else %}
+                        <span>{{ request.current_approver }}</span>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <strong>Remarks:</strong>
+                        <pre class="mt-2 p-2 bg-light">{{ request.remarks }}</pre>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    {% if user_role == 'division_head' and request.current_approver == 'division_head' %}
+                    <a href="{{ url_for('request_approve', id=request.id) }}" class="btn btn-success">
+                        Review Request
+                    </a>
+                    {% endif %}
+                    
+                    {% if user_role == 'store_incharge' and request.current_approver == 'store_incharge' %}
+                    <a href="{{ url_for('request_approve', id=request.id) }}" class="btn btn-success">
+                        Review Request
+                    </a>
+                    {% endif %}
+                    
+                    {% if user_role == 'store_assistant' and request.current_approver == 'store_assistant' %}
+                    <a href="{{ url_for('request_fulfill', id=request.id) }}" class="btn btn-success">
+                        Fulfill Request
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Requested Items</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Quantity</th>
+                                    <th>Fulfilled</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                <tr>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>{{ item.fulfilled }}</td>
+                                    <td>
+                                        {% if item.status == 'pending' %}
+                                        <span class="badge bg-warning">Pending</span>
+                                        {% elif item.status == 'fulfilled' %}
+                                        <span class="badge bg-success">Fulfilled</span>
+                                        {% elif item.status == 'partially_fulfilled' %}
+                                        <span class="badge bg-info">Partial</span>
+                                        {% else %}
+                                        <span class="badge bg-secondary">{{ item.status }}</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

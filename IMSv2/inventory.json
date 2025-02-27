@@ -1,0 +1,32 @@
+{
+    "1": {
+        "id": "1",
+        "item_id": "1",
+        "quantity": 6,
+        "location": "Main Store"
+    },
+    "2": {
+        "id": "2",
+        "item_id": "2",
+        "quantity": 5,
+        "location": "Main Store"
+    },
+    "3": {
+        "id": "3",
+        "item_id": "3",
+        "quantity": 12,
+        "location": "Main Store"
+    },
+    "4": {
+        "id": "4",
+        "item_id": "4",
+        "quantity": 60,
+        "location": "Main Store"
+    },
+    "5": {
+        "id": "5",
+        "item_id": "5",
+        "quantity": 0,
+        "location": "Main Store"
+    }
+}

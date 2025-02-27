@@ -1,0 +1,108 @@
+erDiagram
+    User {
+        int user_id PK
+        string username
+        string password
+        string email
+        string full_name
+        string contact_number
+        int division_id FK
+        string role
+    }
+    
+    Division {
+        int division_id PK
+        string division_name
+        string description
+        int division_head_id FK
+    }
+    
+    Item {
+        int item_id PK
+        string item_name
+        string description
+        string category
+        string specification
+        int min_stock_level
+        int current_stock
+        float unit_price
+    }
+    
+    Inventory {
+        int inventory_id PK
+        int item_id FK
+        int quantity
+        date purchase_date
+        date expiry_date
+        string location
+        string status
+    }
+    
+    Request {
+        int request_id PK
+        int requester_id FK
+        int division_id FK
+        date request_date
+        string status
+        string priority
+        string remarks
+    }
+    
+    RequestItem {
+        int request_item_id PK
+        int request_id FK
+        int item_id FK
+        int requested_quantity
+        int fulfilled_quantity
+        string status
+        string remarks
+    }
+    
+    Issuance {
+        int issuance_id PK
+        int request_id FK
+        int issued_by FK
+        date issuance_date
+        string status
+    }
+    
+    IssuanceItem {
+        int issuance_item_id PK
+        int issuance_id FK
+        int item_id FK
+        int quantity
+        string remarks
+    }
+    
+    PurchaseRequest {
+        int purchase_request_id PK
+        int requested_by FK
+        date request_date
+        string status
+        string remarks
+    }
+    
+    PurchaseRequestItem {
+        int purchase_request_item_id PK
+        int purchase_request_id FK
+        int item_id FK
+        int quantity
+        string remarks
+    }
+    
+    User ||--o{ Request : "makes"
+    User ||--o{ Issuance : "issues"
+    User ||--o{ PurchaseRequest : "requests to buy"
+    Division ||--o{ User : "belongs to"
+    Division ||--o{ Request : "approves"
+    
+    Request ||--o{ RequestItem : "contains"
+    RequestItem }o--|| Item : "references"
+    
+    Issuance ||--o{ IssuanceItem : "contains"
+    IssuanceItem }o--|| Item : "references"
+    
+    PurchaseRequest ||--o{ PurchaseRequestItem : "contains"
+    PurchaseRequestItem }o--|| Item : "references"
+    
+    Item ||--o{ Inventory : "tracked in"

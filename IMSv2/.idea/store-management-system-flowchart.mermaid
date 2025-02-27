@@ -1,0 +1,76 @@
+flowchart TD
+    Start([Start]) --> UserLogin[User logs into system]
+    UserLogin --> CreateRequest[User creates requisition request for items]
+    CreateRequest --> SubmitRequest[User submits request]
+    
+    subgraph "Approval Workflow"
+        SubmitRequest --> DivHeadReview[Division Head reviews request]
+        DivHeadReview --> DivHeadDecision{Division Head\napproves?}
+        DivHeadDecision -->|No| RequestRejected[Request rejected\nwith comments]
+        DivHeadDecision -->|Yes| StoreInchargeReview[Store Incharge reviews request]
+        StoreInchargeReview --> InchargeDecision{Store Incharge\napproves?}
+        InchargeDecision -->|No| RequestRejected
+        InchargeDecision -->|Yes| AssistantReview[Store Assistant reviews request]
+    end
+    
+    subgraph "Fulfillment Process"
+        AssistantReview --> CheckInventory[Store Assistant checks inventory]
+        CheckInventory --> AvailabilityCheck{All items\navailable?}
+        
+        AvailabilityCheck -->|Yes| PrepareItems[Store Assistant prepares all requested items]
+        AvailabilityCheck -->|No| CheckMinimumStock{Below minimum\nstock level?}
+        
+        CheckMinimumStock -->|Yes| ShowAlert[System shows minimum stock alert]
+        ShowAlert --> CreatePurchaseRequest[Store Assistant creates purchase request]
+        CreatePurchaseRequest --> PartialFulfill[Store Assistant prepares available items]
+        
+        CheckMinimumStock -->|No| PartialFulfill
+        
+        PrepareItems --> CreateIssuance[Create issuance record]
+        PartialFulfill --> CreateIssuance
+    end
+    
+    subgraph "Delivery Process"
+        CreateIssuance --> AssistantConfirms[Store Assistant confirms issuance]
+        AssistantConfirms --> InchargeApproves[Store Incharge approves issuance]
+        InchargeApproves --> DivHeadNotified[Division Head notified]
+        DivHeadNotified --> UserReceives[User receives items]
+        UserReceives --> RequestComplete[Request marked as complete]
+    end
+    
+    subgraph "Purchase Process"
+        CreatePurchaseRequest --> AdminReview[Admin reviews purchase request]
+        AdminReview --> ApproveOrder{Admin approves?}
+        ApproveOrder -->|No| ReviseRequest[Purchase request revised]
+        ReviseRequest --> AdminReview
+        ApproveOrder -->|Yes| PlaceOrder[Admin places order with vendor]
+        PlaceOrder --> ReceiveItems[Receive items in inventory]
+        ReceiveItems --> UpdateInventory[Update inventory]
+        
+        UpdateInventory --> FulfillPending{Pending\nrequests?}
+        FulfillPending -->|Yes| NotifyAssistant[Notify Store Assistant\nabout pending requests]
+        NotifyAssistant --> CheckInventory
+        FulfillPending -->|No| End([End])
+    end
+    
+    RequestRejected --> Notify[Notify user of rejection]
+    Notify --> End
+    RequestComplete --> End
+    
+    %% Admin Functions
+    Admin[Admin/Superadmin] -->|Manages| ManageItems[Manage Inventory Items]
+    Admin -->|Manages| ManageUsers[Manage Users and Roles]
+    Admin -->|Monitors| ViewReports[View Reports and Analytics]
+    
+    style Start fill:#99ff99
+    style End fill:#ff9999
+    
+    classDef approvalProcess fill:#ffffcc,stroke:#333
+    classDef fulfillmentProcess fill:#ccffff,stroke:#333
+    classDef deliveryProcess fill:#ffccff,stroke:#333
+    classDef purchaseProcess fill:#ffddcc,stroke:#333
+    
+    class DivHeadReview,DivHeadDecision,StoreInchargeReview,InchargeDecision,AssistantReview approvalProcess
+    class CheckInventory,AvailabilityCheck,PrepareItems,CheckMinimumStock,ShowAlert,CreatePurchaseRequest,PartialFulfill,CreateIssuance fulfillmentProcess
+    class AssistantConfirms,InchargeApproves,DivHeadNotified,UserReceives,RequestComplete deliveryProcess
+    class AdminReview,ApproveOrder,ReviseRequest,PlaceOrder,ReceiveItems,UpdateInventory,FulfillPending,NotifyAssistant purchaseProcess

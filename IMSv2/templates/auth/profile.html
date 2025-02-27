@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile - Store Management System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h4>User Profile</h4>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">Username:</div>
+                    <div class="col-md-8">{{ g.user.username }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">Role:</div>
+                    <div class="col-md-8">{{ g.user.role }}</div>
+                </div>
+                {% if g.user.division_id %}
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">Division:</div>
+                    <div class="col-md-8">
+                        {% set divisions = get_divisions() %}
+                        {% if g.user.division_id in divisions %}
+                            {{ divisions[g.user.division_id].name }}
+                        {% else %}
+                            Not specified
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

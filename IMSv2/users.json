@@ -1,0 +1,44 @@
+{
+    "1": {
+        "id": "1",
+        "username": "admin",
+        "password": "1234",
+        "role": "superadmin",
+        "division_id": null
+    },
+    "2": {
+        "id": "2",
+        "username": "store_manager",
+        "password": "1234",
+        "role": "admin",
+        "division_id": null
+    },
+    "3": {
+        "id": "3",
+        "username": "div_head",
+        "password": "1234",
+        "role": "division_head",
+        "division_id": "1"
+    },
+    "4": {
+        "id": "4",
+        "username": "store_incharge",
+        "password": "1234",
+        "role": "store_incharge",
+        "division_id": null
+    },
+    "5": {
+        "id": "5",
+        "username": "assistant",
+        "password": "1234",
+        "role": "store_assistant",
+        "division_id": null
+    },
+    "6": {
+        "id": "6",
+        "username": "user1",
+        "password": "1234",
+        "role": "user",
+        "division_id": "1"
+    }
+}

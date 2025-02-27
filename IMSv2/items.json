@@ -1,0 +1,42 @@
+{
+    "1": {
+        "id": "1",
+        "name": "Laptop",
+        "description": "Standard office laptop",
+        "category": "Electronics",
+        "min_stock": 5,
+        "unit_price": 800.0
+    },
+    "2": {
+        "id": "2",
+        "name": "Mouse",
+        "description": "Wireless mouse",
+        "category": "Electronics",
+        "min_stock": 10,
+        "unit_price": 25.0
+    },
+    "3": {
+        "id": "3",
+        "name": "Keyboard",
+        "description": "Standard keyboard",
+        "category": "Electronics",
+        "min_stock": 10,
+        "unit_price": 30.0
+    },
+    "4": {
+        "id": "4",
+        "name": "Notebook",
+        "description": "A4 notebook",
+        "category": "Stationery",
+        "min_stock": 50,
+        "unit_price": 3.5
+    },
+    "5": {
+        "id": "5",
+        "name": "Pen",
+        "description": "Ballpoint pen",
+        "category": "Stationery",
+        "min_stock": 100,
+        "unit_price": 1.0
+    }
+}

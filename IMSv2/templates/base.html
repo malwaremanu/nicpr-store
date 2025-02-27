@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Store Management System{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-white ">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <img src="https://erp.nicpr.org/nicpr_logo.png" alt="Logo - NICPR" width="200px">                
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                    </li>
+                    {% if g.user %}
+                        {% if g.user.role == 'user' %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('request_new') }}">New Request</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('request_list') }}">My Requests</a>
+                            </li>
+                        {% endif %}
+                        
+                        {% if g.user.role in ['division_head', 'store_incharge', 'store_assistant'] %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('request_list') }}">Requests</a>
+                            </li>
+                        {% endif %}
+                        
+                        {% if g.user.role in ['store_assistant', 'store_incharge', 'admin', 'superadmin'] %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('inventory_list') }}">Inventory</a>
+                            </li>
+                        {% endif %}
+                        
+                        {% if g.user.role in ['admin', 'superadmin'] %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('admin_items') }}">Manage Items</a>
+                            </li>
+                            {% if g.user.role == 'superadmin' %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('admin_users') }}">Manage Users</a>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav">
+                    {% if g.user %}
+                        <li class="nav-item">
+                            <span class="nav-link">Welcome, {{ g.user.username }} ({{ g.user.role }})</span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-info">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}
+        <div class="jumbotron">
+            <h1 class="display-4">Welcome to Store Management System</h1>
+            <p class="lead">A centralized system for managing store inventory, requests, and item issuance.</p>
+            <hr class="my-4">
+            {% if not g.user %}
+                <p>Please log in to access the system.</p>
+                <a class="btn btn-primary btn-lg" href="{{ url_for('login') }}" role="button">Login</a>
+            {% else %}
+                <p>You are logged in as {{ g.user.username }}.</p>
+                {% if g.user.role == 'user' %}
+                    <a class="btn btn-primary btn-lg" href="{{ url_for('request_new') }}" role="button">Make a New Request</a>
+                {% elif g.user.role in ['division_head', 'store_incharge', 'store_assistant'] %}
+                    <a class="btn btn-primary btn-lg" href="{{ url_for('request_list') }}" role="button">View Requests</a>
+                {% elif g.user.role in ['admin', 'superadmin'] %}
+                    <a class="btn btn-primary btn-lg" href="{{ url_for('admin_dashboard') }}" role="button">Go to Dashboard</a>
+                {% endif %}
+            {% endif %}
+        </div>
+        {% endblock %}
+    </div>
+
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container text-center">
+            <span class="text-muted">Store Management System &copy; 2025</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

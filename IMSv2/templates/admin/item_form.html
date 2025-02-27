@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if item %}Edit Item{% else %}Add Item{% endif %} - Store Management System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h4>{% if item %}Edit Item{% else %}Add New Item{% endif %}</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Item Name</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ item.name if item else '' }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3">{{ item.description if item else '' }}</textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <input type="text" class="form-control" id="category" name="category" value="{{ item.category if item else '' }}" required>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="min_stock" class="form-label">Minimum Stock Level</label>
+                            <input type="number" class="form-control" id="min_stock" name="min_stock" value="{{ item.min_stock if item else 5 }}" min="0" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="unit_price" class="form-label">Unit Price ($)</label>
+                            <input type="number" class="form-control" id="unit_price" name="unit_price" value="{{ item.unit_price if item else 0.00 }}" min="0" step="0.01" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        {% if item %}
+                        <div class="col-md-6 mb-3">
+                            <label for="quantity" class="form-label">Current Quantity</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" value="{{ item.quantity }}" min="0" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="location" class="form-label">Storage Location</label>
+                            <input type="text" class="form-control" id="location" name="location" value="{{ item.location }}">
+                        </div>
+                        {% else %}
+                        <div class="col-md-6 mb-3">
+                            <label for="initial_quantity" class="form-label">Initial Quantity</label>
+                            <input type="number" class="form-control" id="initial_quantity" name="initial_quantity" value="0" min="0" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="location" class="form-label">Storage Location</label>
+                            <input type="text" class="form-control" id="location" name="location" value="Main Store">
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary">{% if item %}Update Item{% else %}Add Item{% endif %}</button>
+                        <a href="{{ url_for('admin_items') }}" class="btn btn-secondary ms-2">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
