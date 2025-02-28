@@ -38,5 +38,21 @@
         "category": "Stationery",
         "min_stock": 100,
         "unit_price": 1.0
+    },
+    "6": {
+        "id": "6",
+        "name": "Chair",
+        "description": "",
+        "category": "Stationery",
+        "min_stock": 10,
+        "unit_price": 200.0
+    },
+    "7": {
+        "id": "7",
+        "name": "Pencil",
+        "description": "Natraj",
+        "category": "Stationery",
+        "min_stock": 100,
+        "unit_price": 10.0
     }
 }

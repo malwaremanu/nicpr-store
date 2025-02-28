@@ -28,5 +28,17 @@
         "item_id": "5",
         "quantity": 0,
         "location": "Main Store"
+    },
+    "6": {
+        "id": "6",
+        "item_id": "6",
+        "quantity": 5,
+        "location": "Main Store"
+    },
+    "7": {
+        "id": "7",
+        "item_id": "7",
+        "quantity": 95,
+        "location": "Main Store"
     }
 }

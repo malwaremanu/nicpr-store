@@ -21,9 +21,18 @@
                         <textarea class="form-control" id="description" name="description" rows="3">{{ item.description if item else '' }}</textarea>
                     </div>
                     
-                    <div class="mb-3">
-                        <label for="category" class="form-label">Category</label>
-                        <input type="text" class="form-control" id="category" name="category" value="{{ item.category if item else '' }}" required>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="category" class="form-label">Category</label>
+                            <input type="text" class="form-control" id="category" name="category" value="{{ item.category if item else '' }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="sub_category" class="form-label">Sub-Category</label>                                                                                    
+                            <select class="form-control" id="sub_category" name="sub_category" >
+                                <option value="consumable">Consumable</option>
+                                <option value="non-consumable">Non-Consumable</option>                                
+                            </select>
+                        </div>
                     </div>
                     
                     <div class="row">
@@ -33,7 +42,7 @@
                         </div>
                         
                         <div class="col-md-6 mb-3">
-                            <label for="unit_price" class="form-label">Unit Price ($)</label>
+                            <label for="unit_price" class="form-label">Unit Price (Rs.)</label>
                             <input type="number" class="form-control" id="unit_price" name="unit_price" value="{{ item.unit_price if item else 0.00 }}" min="0" step="0.01" required>
                         </div>
                     </div>

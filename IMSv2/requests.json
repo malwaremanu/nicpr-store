@@ -76,5 +76,65 @@
         ],
         "remarks": "\n[div_head]: Approved",
         "current_approver": "store_incharge"
+    },
+    "5": {
+        "id": "5",
+        "requester_id": "6",
+        "requester_name": "user1",
+        "division_id": "1",
+        "date": "2025-02-28 09:23:34",
+        "status": "rejected",
+        "items": [
+            {
+                "item_id": "3",
+                "quantity": 12,
+                "fulfilled": 0,
+                "status": "pending"
+            },
+            {
+                "item_id": "4",
+                "quantity": 20,
+                "fulfilled": 0,
+                "status": "pending"
+            }
+        ],
+        "remarks": "\n[div_head]: Rejected - NOT ALLOWED",
+        "current_approver": "rejected"
+    },
+    "6": {
+        "id": "6",
+        "requester_id": "6",
+        "requester_name": "user1",
+        "division_id": "1",
+        "date": "2025-02-28 09:35:41",
+        "status": "partially_fulfilled",
+        "items": [
+            {
+                "item_id": "7",
+                "quantity": 10,
+                "fulfilled": 5,
+                "status": "partially_fulfilled"
+            }
+        ],
+        "remarks": "\n[div_head]: Approved\n[store_incharge]: Approved\n[assistant]: Fulfilled items",
+        "current_approver": "fulfilled"
+    },
+    "7": {
+        "id": "7",
+        "requester_id": "6",
+        "requester_name": "user1",
+        "division_id": "1",
+        "date": "2025-02-28 09:43:50",
+        "status": "pending",
+        "items": [
+            {
+                "item_id": "1",
+                "quantity": 2,
+                "fulfilled": 0,
+                "status": "pending"
+            }
+        ],
+        "remarks": "",
+        "current_approver": "division_head"
     }
 }
